@@ -33,6 +33,12 @@ const App: React.FC = () => {
     setTodos(newTodos);
   }
 
+  const deleteTodo = (key: number): void => {
+    const newTodos: ITodo[] = [...todos];
+    newTodos.splice(key, 1);
+    setTodos(newTodos);
+  }
+
 
   return (
     <Fragment>
@@ -46,8 +52,11 @@ const App: React.FC = () => {
           {todos.map((todo: ITodo, key: number) => (
             <Fragment key={key}>
               <li><span style={{ textDecoration: todo.complete ? 'line-through' : ''}}>{todo.text}</span> {(todo.complete ? "❌" : "✅")} </li>
-              <button onClick={() => completeTodo(key)}>
+              <button type="button" onClick={() => completeTodo(key)}>
                 Complete
+              </button>
+              <button type="button" onClick={() => deleteTodo(key)}>
+                Delete
               </button>
             </Fragment>
           ))}
