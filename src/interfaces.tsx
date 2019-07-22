@@ -1,3 +1,5 @@
+import { number } from "prop-types";
+
 /**
 |--------------------------------------------------
 | Interfaces go here
@@ -22,10 +24,42 @@ export interface IEpisode {
     url: string;
   }
 
+  export interface IEpisodeProps {
+    episodes: Array<IEpisode>,
+    toggleFavAction: (episode: IEpisode) => IAction,
+    favorites: Array<IEpisode>,
+    summary: string, 
+    show: IShow;
+  }
+
+  export interface IShow {
+    externals: Array<any>;
+    genres: Array<string>;
+    id: number;
+    image: Array<string>;
+    language: string
+    name: string
+    network: Array<any>
+    officialSite: string
+    premiered: string
+    rating: Array<number>
+    runtime: number
+    schedule: Array<any>
+    status: string
+    summary: string
+    type: string
+    updated: number
+    url: string
+    webChannel: string;
+    weight: number;
+    _embedded: Array<IEpisode>;
+    _links: Array<string>;
+  }
+
   export interface IState {
     show:  Array<any>;
     episodes:  Array<IEpisode>;
-    favorites: Array<any>;
+    favorites: Array<IEpisode>;
     summary: string;
   }
   

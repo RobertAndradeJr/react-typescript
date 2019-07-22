@@ -2,17 +2,16 @@ import React, { lazy } from "react";
 import "./index.css";
 import "./App.css";
 import { Store } from "./store";
-import { IAction, IEpisode } from "./interfaces";
+import { IAction, IEpisode, IEpisodeProps } from "./interfaces";
+import { Link} from '@reach/router';
 import Title from "./Title";
+import HomePage from "./HomePage";
 
 const App: React.FC = () => {
   const { state, dispatch } = React.useContext(Store);
-  const EpisodesList = lazy<any>(() => import("./EpisodesList"));
-
   React.useEffect(() => {
     state.episodes.length === 0 && fetchDataAction();
   });
-
   const fetchDataAction = async () => {
     const URL =
       "https://api.tvmaze.com/singlesearch/shows?q=avatar+the+last+airbender&embed=episodes";
@@ -32,9 +31,10 @@ const App: React.FC = () => {
       payload: episode
     });
   };
+
   const { show, episodes, summary, favorites } = state;
 
-  const props = {
+  const props: IEpisodeProps = {
     episodes,
     toggleFavAction,
     summary,
@@ -42,16 +42,22 @@ const App: React.FC = () => {
     show
   };
 
+console.log(state);
+
   return (
     <>
-      <section className="title">
+      <header className="title">
         <Title {...props} />
-      </section>
-
+        <Link to='/'>
+          Home
+        </Link>
+        <Link to='/favorites'>
+          Favorites: {favorites.length}
+        </Link>
+      </header>
+      
       <section className="episodes flex content-center flex-wrap justify-center items-center">
-        <React.Suspense fallback={<div>loading...</div>}>
-          <EpisodesList {...props} />
-        </React.Suspense>
+        <HomePage {...props} />
       </section>
     </>
   );
