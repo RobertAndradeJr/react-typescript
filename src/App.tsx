@@ -1,13 +1,13 @@
-import React from "react";
+import React, { lazy } from "react";
 import "./index.css";
 import "./App.css";
 import { Store } from "./store";
 import { IAction, IEpisode } from "./interfaces";
-import EpisodesList from "./EpisodesList";
 import Title from "./Title";
 
 const App: React.FC = () => {
   const { state, dispatch } = React.useContext(Store);
+  const EpisodesList = lazy<any>(() => import("./EpisodesList"));
 
   React.useEffect(() => {
     state.episodes.length === 0 && fetchDataAction();
@@ -34,19 +34,24 @@ const App: React.FC = () => {
   };
   const { show, episodes, summary, favorites } = state;
 
-  console.log(state);
+  const props = {
+    episodes,
+    toggleFavAction,
+    summary,
+    favorites,
+    show
+  };
 
   return (
     <>
       <section className="title">
-        <Title show={show} summary={summary} />
+        <Title {...props} />
       </section>
+
       <section className="episodes flex content-center flex-wrap justify-center items-center">
-        <EpisodesList
-          episodes={episodes}
-          favorites={favorites}
-          toggleFavAction={toggleFavAction}
-        />
+        <React.Suspense fallback={<div>loading...</div>}>
+          <EpisodesList {...props} />
+        </React.Suspense>
       </section>
     </>
   );
