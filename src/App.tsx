@@ -3,13 +3,7 @@ import React from "react";
 import "./index.css";
 import "./App.css";
 import { Store } from "./store";
-
-type FormElem = React.FormEvent<HTMLFormElement>;
-
-interface ITodo {
-  text: string;
-  complete: boolean;
-}
+import { IAction, IEpisode } from "./interfaces";
 
 const App: React.FC = () => {
   const { state, dispatch } = React.useContext(Store);
@@ -29,19 +23,28 @@ const App: React.FC = () => {
     });
   };
 
+  const toggleFavAction = (episode: IEpisode): IAction => dispatch({
+    type: 'ADD_FAV',
+    payload: episode
+  })
+
   const show = state.show;
   const episodes = state.episodes;
   const summary = state.summary;
 
+  console.log(state);
+
   return (
     <React.Fragment>
-      <a href={show.url}>
-        <img
-          className="max-w-lg mx-auto"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Logo_de_Avatar_la_leyenda_de_Aang.png/1600px-Logo_de_Avatar_la_leyenda_de_Aang.png"
-          alt="Avatar: The Last Airbender"
-        />
-      </a>
+      <div className="header">
+        <a href={show.url}>
+          <img
+            className=" mx-auto max-w-lg"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Logo_de_Avatar_la_leyenda_de_Aang.png/1600px-Logo_de_Avatar_la_leyenda_de_Aang.png"
+            alt="Avatar: The Last Airbender"
+          />
+        </a>
+      </div>
       <div className="bg-gray-100 p-2 m-12 description">
         <p className="text-left text-lg m-4">{summary}</p>
         <p className="text-center text-black text-3xl font-extrabold uppercase p-4">
@@ -49,7 +52,7 @@ const App: React.FC = () => {
         </p>
       </div>
       <section className="flex content-center flex-wrap justify-center items-center">
-        {episodes.map((episode: any) => (
+        {episodes.map((episode: IEpisode) => (
           <section
             className="flex-row flex-grow-0 flex-auto text-gray-700 text-center bg-gray-400 px-4 py-2 m-2 w-3/12"
             key={episode.id}
@@ -63,6 +66,9 @@ const App: React.FC = () => {
             <section>
               Season: {episode.season} <br />
               Episode: {episode.number}
+              <button type="button" onClick={() => toggleFavAction(episode)}>
+                Favorite
+              </button>
             </section>
           </section>
         ))}
