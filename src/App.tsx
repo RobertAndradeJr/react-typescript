@@ -25,16 +25,35 @@ const App: React.FC = () => {
     const dataJSON = await data.json();
     return dispatch({
       type: "FETCH_DATA",
-      payload: dataJSON._embedded.episodes
+      payload: dataJSON
     });
   };
+
+  const show = state.show;
+  const episodes = state.episodes;
+  const summary = state.summary;
+
   return (
     <React.Fragment>
-      <img className="max-w-lg mx-auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Logo_de_Avatar_la_leyenda_de_Aang.png/1600px-Logo_de_Avatar_la_leyenda_de_Aang.png" alt="Avatar: The Last Airbender" />
-      <p className="text-center text-black text-3xl font-extrabold uppercase">Pick your favorite episode:</p>
+      <a href={show.url}>
+        <img
+          className="max-w-lg mx-auto"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Logo_de_Avatar_la_leyenda_de_Aang.png/1600px-Logo_de_Avatar_la_leyenda_de_Aang.png"
+          alt="Avatar: The Last Airbender"
+        />
+      </a>
+      <div className="bg-gray-100 p-2 m-12 description">
+        <p className="text-left text-lg m-4">{summary}</p>
+        <p className="text-center text-black text-3xl font-extrabold uppercase p-4">
+          Pick your favorite episode:
+        </p>
+      </div>
       <section className="flex content-center flex-wrap justify-center items-center">
-        {state.episodes.map((episode: any) => (
-          <section className="flex-row flex-grow-0 flex-auto text-gray-700 text-center bg-gray-400 px-4 py-2 m-2 w-3/12" key={episode.id}>
+        {episodes.map((episode: any) => (
+          <section
+            className="flex-row flex-grow-0 flex-auto text-gray-700 text-center bg-gray-400 px-4 py-2 m-2 w-3/12"
+            key={episode.id}
+          >
             <img
               className="mx-auto"
               src={episode.image.medium}
