@@ -1,3 +1,10 @@
+/**
+|--------------------------------------------------
+| Interfaces go here
+|--------------------------------------------------
+*/
+
+
 export interface IEpisode {
     airdate: string;
     airstamp: string;
@@ -17,7 +24,7 @@ export interface IEpisode {
 
   export interface IState {
     show:  Array<any>;
-    episodes:  Array<any>;
+    episodes:  Array<IEpisode>;
     favorites: Array<any>;
     summary: string;
   }

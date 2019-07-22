@@ -23,11 +23,14 @@ const App: React.FC = () => {
     });
   };
 
-  const toggleFavAction = (episode: IEpisode): IAction => dispatch({
-    type: 'ADD_FAV',
+  const toggleFavAction = (episode: IEpisode): IAction => {
+   const episodeInFav = state.favorites.includes(episode);
+   let action = episodeInFav ? 'REMOVE_FAV' : 'ADD_FAV';
+   return dispatch({
+    type: action,
     payload: episode
   })
-
+  }
   const show = state.show;
   const episodes = state.episodes;
   const summary = state.summary;
@@ -65,9 +68,9 @@ const App: React.FC = () => {
             <p>{episode.name}</p>
             <section>
               Season: {episode.season} <br />
-              Episode: {episode.number}
+              Episode: {episode.number} <br />
               <button type="button" onClick={() => toggleFavAction(episode)}>
-                Favorite
+                {state.favorites.find((fav: IEpisode) => fav.id === episode.id) ? 'Unfavorite' : 'Favorite'}
               </button>
             </section>
           </section>
