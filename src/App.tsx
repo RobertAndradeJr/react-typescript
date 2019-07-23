@@ -1,40 +1,22 @@
-import React, { lazy } from "react";
+import React from "react";
 import "./index.css";
 import "./App.css";
 import { Store } from "./store";
-import { IAction, IEpisode, IEpisodeProps } from "./interfaces";
-import { Link} from '@reach/router';
+import { IEpisodeProps } from "./interfaces";
+import { Link } from "@reach/router";
 import Title from "./Title";
 import HomePage from "./HomePage";
+import { fetchDataAction, toggleFavAction } from "./Actions";
 
-const App: React.FC = () => {
+const App: React.FC = (props:any) => {
   const { state, dispatch } = React.useContext(Store);
   React.useEffect(() => {
-    state.episodes.length === 0 && fetchDataAction();
+    state.episodes.length === 0 && fetchDataAction(dispatch);
   });
-  const fetchDataAction = async () => {
-    const URL =
-      "https://api.tvmaze.com/singlesearch/shows?q=avatar+the+last+airbender&embed=episodes";
-    const data = await fetch(URL);
-    const dataJSON = await data.json();
-    return dispatch({
-      type: "FETCH_DATA",
-      payload: dataJSON
-    });
-  };
-
-  const toggleFavAction = (episode: IEpisode): IAction => {
-    const episodeInFav = state.favorites.includes(episode);
-    let action = episodeInFav ? "REMOVE_FAV" : "ADD_FAV";
-    return dispatch({
-      type: action,
-      payload: episode
-    });
-  };
 
   const { show, episodes, summary, favorites } = state;
 
-  const props: IEpisodeProps = {
+  const _props: IEpisodeProps = {
     episodes,
     toggleFavAction,
     summary,
@@ -42,24 +24,20 @@ const App: React.FC = () => {
     show
   };
 
-console.log(state);
+  console.log(state);
 
   return (
-    <>
+    <React.Fragment>
       <header className="title">
-        <Title {...props} />
-        <Link to='/'>
-          Home
-        </Link>
-        <Link to='/favorites'>
-          Favorites: {favorites.length}
-        </Link>
+        <Title {..._props} />
+        <Link to="/">Home</Link>
+        <Link to="/favorites">Favorites: {favorites.length}</Link>
       </header>
-      
+      {props.children}
       <section className="episodes flex content-center flex-wrap justify-center items-center">
-        <HomePage {...props} />
+        <HomePage {..._props} state={state} dispatch={dispatch} />
       </section>
-    </>
+    </React.Fragment>
   );
 };
 

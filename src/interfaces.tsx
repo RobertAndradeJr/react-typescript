@@ -1,4 +1,6 @@
 import { number } from "prop-types";
+import { toggleFavAction } from "./Actions";
+
 
 /**
 |--------------------------------------------------
@@ -26,7 +28,7 @@ export interface IEpisode {
 
   export interface IEpisodeProps {
     episodes: Array<IEpisode>,
-    toggleFavAction: (episode: IEpisode) => IAction,
+    toggleFavAction: (state: IState, episode: any, dispatch: any) => IAction,
     favorites: Array<IEpisode>,
     summary: string, 
     show: IShow;
