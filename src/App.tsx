@@ -6,7 +6,7 @@ import { IEpisodeProps } from "./interfaces";
 import Title from "./Title";
 import { fetchDataAction, toggleFavAction } from "./Actions";
 
-export default function App(props:any) {
+export default function App(props: any) {
   const { state, dispatch } = React.useContext(Store);
   React.useEffect(() => {
     state.episodes.length === 0 && fetchDataAction(dispatch);
@@ -22,7 +22,7 @@ export default function App(props:any) {
     show
   };
 
-  console.log(props)
+  console.log(props);
   return (
     <React.Fragment>
       <header className="title">
@@ -30,5 +30,5 @@ export default function App(props:any) {
       </header>
       {props.children}
     </React.Fragment>
-  )
+  );
 }

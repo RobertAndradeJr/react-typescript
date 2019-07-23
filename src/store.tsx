@@ -1,7 +1,6 @@
 import React, { createContext, useReducer } from "react";
 import { IState, IAction, IEpisode } from "./interfaces";
 
-
 const initialState: IState = {
   show: [],
   episodes: [],
@@ -21,9 +20,16 @@ function reducer(state: IState, action: IAction): IState {
         summary: action.payload.summary.replace(/(<([^>]+)>)/gi, "")
       };
     case "ADD_FAV":
-      return {...state, favorites: [...state.favorites, action.payload ]}
+      return { ...state, favorites: [...state.favorites, action.payload] };
     case "REMOVE_FAV":
-      return {...state, favorites: [...state.favorites.filter(( fav: IEpisode )=> fav.id !== action.payload.id)]}
+      return {
+        ...state,
+        favorites: [
+          ...state.favorites.filter(
+            (fav: IEpisode) => fav.id !== action.payload.id
+          )
+        ]
+      };
     default:
       return state;
   }

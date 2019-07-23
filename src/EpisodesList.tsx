@@ -6,7 +6,6 @@ import { Store } from "./store";
 export default function EpisodesList(props: any): any {
   const { state, dispatch } = React.useContext(Store);
 
-  
   const { episodes, favorites } = state;
 
   return episodes.map((episode: IEpisode) => {
@@ -24,7 +23,10 @@ export default function EpisodesList(props: any): any {
         <section>
           Season: {episode.season} <br />
           Episode: {episode.number} <br />
-          <button type="button" onClick={() => toggleFavAction(state, episode, dispatch)}>
+          <button
+            type="button"
+            onClick={() => toggleFavAction(state, episode, dispatch)}
+          >
             {favorites.find((fav: IEpisode) => fav.id === episode.id)
               ? "Unfavorite"
               : "Favorite"}
