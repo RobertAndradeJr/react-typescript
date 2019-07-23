@@ -3,6 +3,7 @@ import { Link } from "@reach/router";
 
 export default function Title(props: any) {
   const { show, summary, favorites } = props;
+
   return (
     <>
       <div className="header">

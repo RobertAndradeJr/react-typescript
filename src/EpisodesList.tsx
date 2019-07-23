@@ -1,38 +1,16 @@
 import React from "react";
 import { IEpisode } from "./interfaces";
-import { toggleFavAction } from "./Actions";
 import { Store } from "./store";
+import Episodes from "./Episodes";
 
-export default function EpisodesList(props: any): any {
-  const { state, dispatch } = React.useContext(Store);
+export default function EpisodesList(): JSX.Element {
+  const { state } = React.useContext(Store);
 
   const { episodes, favorites } = state;
 
   return episodes.map((episode: IEpisode) => {
     return (
-      <section
-        className="flex-row flex-grow-0 flex-auto text-gray-700 text-center bg-gray-400 px-4 py-2 m-2 w-3/12"
-        key={episode.id}
-      >
-        <img
-          className="mx-auto max-w-full	"
-          src={episode.image.medium}
-          alt={`Avatar Episode: ${episode.name}`}
-        />
-        <p>{episode.name}</p>
-        <section>
-          Season: {episode.season} <br />
-          Episode: {episode.number} <br />
-          <button
-            type="button"
-            onClick={() => toggleFavAction(state, episode, dispatch)}
-          >
-            {favorites.find((fav: IEpisode) => fav.id === episode.id)
-              ? "Unfavorite"
-              : "Favorite"}
-          </button>
-        </section>
-      </section>
+      <Episodes key={episode.id} episode={episode} favorites={favorites} />
     );
   });
 }
