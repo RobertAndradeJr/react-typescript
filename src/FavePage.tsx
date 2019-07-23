@@ -1,9 +1,17 @@
-import React from 'react'
+import React, {  lazy } from "react";
 
-export default function FavePage() {
+const EpisodesList = lazy<any>(() => import("./FavesList"))
+
+export default function HomePage(props:any) {
+
     return (
-        <div>
-            yeet
-        </div>
-    )
+    <>
+      <React.Suspense fallback={''}>
+      <section className="flex flex-wrap justify-center items-center">
+
+        <EpisodesList />  
+        </section>
+      </React.Suspense>
+    </>
+  );
 }

@@ -1,12 +1,16 @@
 import React, {  lazy } from "react";
 
+const EpisodesList = lazy<any>(() => import("./EpisodesList"))
 
 export default function HomePage(props:any) {
-    const EpisodesList = lazy<any>(() => import("./EpisodesList"));
-  return (
+
+    return (
     <>
       <React.Suspense fallback={<div>loading...</div>}>
-        <EpisodesList {...props} />
+      <section className="flex flex-wrap justify-center items-center">
+        <EpisodesList />  
+        </section>
+
       </React.Suspense>
     </>
   );

@@ -7,9 +7,9 @@ export default function EpisodesList(props: any): any {
   const { state, dispatch } = React.useContext(Store);
 
   
-  const { episodes, favorites } = state;
+  const { favorites } = state;
 
-  return episodes.map((episode: IEpisode) => {
+  return favorites.map((episode: IEpisode) => {
     return (
       <section
         className="flex-row flex-grow-0 flex-auto text-gray-700 text-center bg-gray-400 px-4 py-2 m-2 w-3/12"
